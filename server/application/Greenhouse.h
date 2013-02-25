@@ -18,8 +18,8 @@
 
 #define BUFFER_SIZE 800
 #define DB_FILE "database/greenhouse3.db"
-#define TABLE_NAME "greenhouseReadings"
 #define CSV_FILE "../public_html/data.csv"
+#define TABLE_NAME "stats_table"
 
 class Greenhouse {
     
