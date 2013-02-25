@@ -38,6 +38,10 @@
 	.grid .tick {
 	  stroke: #CCC;
 	}
+	
+	.labels.x_labels {
+		font-size: 9px;
+	}
 
 	    </style>
 		
@@ -46,8 +50,12 @@
 		<script type="text/javascript">
 		
 		d3.text("data.csv", function(unparsedData) {
-		
+				
 			var dataset = d3.csv.parseRows(unparsedData);
+			var totalReadings = 100;
+			
+			dataset = dataset.splice( dataset.length - totalReadings, totalReadings );
+
 			var barPadding = 0;
 	
 			var w = 760;
@@ -112,8 +120,8 @@
 			rules.append("svg:g").classed("labels x_labels", true)
 			    .attr("transform", "translate(0,"+h+")")
 			    .call(make_x_axis()
-			      .tickSize(5)
-			      .tickFormat(d3.time.format("%X"))
+			      .tickSize(10)
+			      .tickFormat(d3.time.format("%I:%M %p"))
 			    )
 
 			rules.append("svg:g").classed("labels y_labels", true)
