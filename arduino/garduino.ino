@@ -1,23 +1,21 @@
 /*
   Web Server
  
- A simple web server that shows the value of the analog input pins.
- using an Arduino Wiznet Ethernet shield. 
- 
  Circuit:
  * Ethernet shield attached to pins 10, 11, 12, 13
- * Analog inputs attached to pins A0 through A5 (optional)
- 
+
+ Based on Web Server code from Arduino.cc:
  created 18 Dec 2009
  by David A. Mellis
  modified 9 Apr 2012
  by Tom Igoe
+ 
+ adapted Feb 2013
+ by Ashley Revlett
 
 PINS: 
 A0: light sensor
 A3: temperature
- 
- 
  
  */
 

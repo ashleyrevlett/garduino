@@ -27,11 +27,13 @@ In progress.
 ##Usage:
 
 **Arduino:**
-Upload the "arduino/garduino.ino" sketch to an Arduino that's connected
-to your local network via an [Ethernet Shield](http://arduino.cc/en/Main/ArduinoEthernetShield).
+Connect your Arduino to an [Ethernet Shield](http://arduino.cc/en/Main/ArduinoEthernetShield) and plug it into your router. 
+Attach a light sensor to ```pin A0``` and a temperature sensor to ```pin A3```. 
+Upload the "arduino/garduino.ino" sketch to the Arduino.
+Let it run. 
 
 **Server:**
-Set up a server (I've tested both Debian Squeeze and a Mac) with Apache cURL, and SQLite3 installed, then:
+Set up a server (I've tested both Debian Squeeze and a Mac) with Apache, cURL, and SQLite3 installed, then:
 ```
 git clone https://github.com/ashleyrevlett/garduino.git
 cd server/application
