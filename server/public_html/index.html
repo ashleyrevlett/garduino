@@ -45,7 +45,7 @@
 		
 		<script type="text/javascript">
 		
-		d3.text("/public_html/data.csv", function(unparsedData) {
+		d3.text("data.csv", function(unparsedData) {
 		
 			var dataset = d3.csv.parseRows(unparsedData);
 			var barPadding = 0;
