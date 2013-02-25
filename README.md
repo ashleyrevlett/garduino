@@ -27,12 +27,12 @@ your server's IP Address.
  
 ## System Components:
 
-####Arduino Gardaemon: 
+####Garduino (Arduino): 
 Garduino is a simple sketch that senses temperature, light, and humidity.
 It uses the Arduino's Ethernet library to serve a CSV file over HTTP.
 Requires Arduino w/ Ethernet Shield and an IP address.
 
-####Greenhouse Application:
+####Greenhouse Application (Daemon on Server):
 "Greenhouse" is a C++ application runs an infinite loop, regularly reading data 
 from an Arduino via HTTP, recording data to a SQLite DB, and updating a CSV file for the web app to read.
 Compiling the app requires cURL and SQLite3.
