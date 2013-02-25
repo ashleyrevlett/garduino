@@ -13,11 +13,12 @@ Upload the "arduino/garduino.ino" sketch to an Arduino that's connected
 to your local network via an [Ethernet Shield](http://arduino.cc/en/Main/ArduinoEthernetShield).
 
 Server:
-    Set up a server (I've tested both Debian Squeeze and a Mac) with cURL and SQLite3 installed, then:
-    git clone https://github.com/ashleyrevlett/garduino.git
-    cd server/application
-    make
-    ./greenhouse ARDUINO_URL (ex.: ./greenhouse http://192.168.1.191)
+Set up a server (I've tested both Debian Squeeze and a Mac) with cURL and SQLite3 installed, then:
+````git clone https://github.com/ashleyrevlett/garduino.git
+cd server/application
+make
+./greenhouse ARDUINO_URL (ex.: ./greenhouse http://192.168.1.191)
+````
 
 To use the web app, install a web server like Apache and create 
 a virtual host that points to the server/public_html directory of the Garduino.
