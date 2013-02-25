@@ -1,14 +1,25 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
-  <head>
-    <title>D3 - Line Chart - axes and grid using axis()</title>
-    <!-- script type="text/javascript" src="https://raw.github.com/jquery/sizzle/master/sizzle.js"></script -->
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.min.js"></script>
-    <style type="text/css">
+	<head>
+		<meta charset="utf-8">
+		<title>Garduino</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			body {padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */}
+		</style>
+		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<![endif]--><!-- Fav and touch icons -->
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+		<link rel="shortcut icon" href="assets/ico/favicon.png">
 
-	body {
-	  font: 10px sans-serif;
-	}
+	    <style type="text/css">
 
 	.rules line, .rules path {
 	  shape-rendering: crispEdges;
@@ -28,132 +39,170 @@
 	  stroke: #CCC;
 	}
 
-    </style>
-  </head>
-  <body>
-	  
-	<div id="graph"></div>
-	  
-<script type="text/javascript">
+	    </style>
 		
-d3.text("/public_html/data.csv", function(unparsedData) {
+	    <script type="text/javascript" src="http://d3js.org/d3.v2.min.js"></script>
 		
-	var dataset = d3.csv.parseRows(unparsedData);
-	var barPadding = 0;
+		<script type="text/javascript">
+		
+		d3.text("/public_html/data.csv", function(unparsedData) {
+		
+			var dataset = d3.csv.parseRows(unparsedData);
+			var barPadding = 0;
 	
-	var w = 760;
-	var h = 400;
-	var pad = 50;
+			var w = 760;
+			var h = 400;
+			var pad = 50;
 
-	var d = new Date();
-	var n = d.getTime();
-	var date2 = new Date(n);
+			dataset.forEach(function(d) {
+				d[0] = d[0]*1000;
+			});
 
-	var minDate = d3.min(dataset, function(d) { 
-		return d[0]; 
-	});
-	var maxDate = d3.max(dataset, function(d) { return d[0]; });
+			var minDate = d3.min(dataset, function(d) { 
+				return new Date(d[0]); 
+			});
+			var maxDate = d3.max(dataset, function(d) { 
+				return new Date(d[0]);
+			});
 
-	console.log("Min: "+minDate);
-	console.log("Max: "+maxDate);
+			var minTemp = d3.min(dataset, function(d) { return d[1]; });
+			var maxTemp = d3.max(dataset, function(d) { return d[1]; });
 
-	var minTemp = d3.min(dataset, function(d) { return d[1]; });
-	var maxTemp = d3.max(dataset, function(d) { return d[1]; });
+			var xScale = d3.time.scale().domain([minDate, maxDate]).range([0,w]);
+			var yScale = d3.scale.linear().domain([minTemp, maxTemp]).range([h,0]);
 
-	var xScale = d3.scale.linear().domain([minDate, maxDate]).range([0,w]);
-	var yScale = d3.scale.linear().domain([minTemp, maxTemp]).range([h,0]);
+			var svg = d3.select("#graph")
+			    .append("svg:svg")
+			    .attr("height", h + pad)
+			    .attr("width",  w + pad)
 
-	var svg = d3.select("body")
-	    .append("svg:svg")
-	    .attr("height", h + pad)
-	    .attr("width",  w + pad)
+			// lines container
+			var vis = svg.append("svg:g")
+			    .attr("transform", "translate(40,20)")
+			var rules = vis.append("svg:g").classed("rules", true)
 
-	// lines container
-	var vis = svg.append("svg:g")
-	    .attr("transform", "translate(40,20)")
-	var rules = vis.append("svg:g").classed("rules", true)
+			function make_x_axis() {
+			  return d3.svg.axis()
+			      .scale(xScale)
+			      .orient("bottom")
+			      .ticks(8)
+			}
 
-	function make_x_axis() {
-	  return d3.svg.axis()
-	      .scale(xScale)
-	      .orient("bottom")
-	      .ticks(8)
-	}
+			function make_y_axis() {
+			  return d3.svg.axis()
+			      .scale(yScale)
+			      .orient("left")
+			      .ticks(10)
+			}
 
-	function make_y_axis() {
-	  return d3.svg.axis()
-	      .scale(yScale)
-	      .orient("left")
-	      .ticks(10)
-	}
+			rules.append("svg:g").classed("grid x_grid", true)
+			    .attr("transform", "translate(0,"+h+")")
+			    .call(make_x_axis()
+			      .tickSize(-h,0,0)
+			      .tickFormat("")
+			    )
 
-	rules.append("svg:g").classed("grid x_grid", true)
-	    .attr("transform", "translate(0,"+h+")")
-	    .call(make_x_axis()
-	      .tickSize(-h,0,0)
-	      .tickFormat("")
-	    )
+			rules.append("svg:g").classed("grid y_grid", true)
+			    .call(make_y_axis()
+			      .tickSize(-w,0,0)
+			      .tickFormat("")
+		//		  .tickFormat(d3.format(",.0f"))
+			    )
 
-	rules.append("svg:g").classed("grid y_grid", true)
-	    .call(make_y_axis()
-	      .tickSize(-w,0,0)
-	      .tickFormat("")
-//		  .tickFormat(d3.format(",.0f"))
-	    )
+			rules.append("svg:g").classed("labels x_labels", true)
+			    .attr("transform", "translate(0,"+h+")")
+			    .call(make_x_axis()
+			      .tickSize(5)
+			      .tickFormat(d3.time.format("%X"))
+			    )
 
-	rules.append("svg:g").classed("labels x_labels", true)
-	    .attr("transform", "translate(0,"+h+")")
-	    .call(make_x_axis()
-	      .tickSize(5)
-	      //.tickFormat(d3.time.format("%Y/%m"))
-	    )
-
-	rules.append("svg:g").classed("labels y_labels", true)
-	    .call(make_y_axis()
-	      .tickSubdivide(1)
-	      .tickSize(10, 5, 0)
-	    )
-
-		
-	// create bars
-	svg.append("svg:g").classed("bar_chart container", true)
-		.attr("transform", "translate(40,0)")
-		.selectAll("rect")
-		.data(dataset)
-		.enter()
-		.append("rect")
-		.attr("fill", "#cccccc")
-		.style("opacity", 0.9)
-		.attr("x", function(d,i) {
-			return xScale(d[0]);
-		})
-		.attr("y", function(d,i) {
-			// return ( 10*i );
-			return ( h - yScale(d[1]) + 20 );
-		})
-		.attr("width", function(d,i) {
-			return ( w / dataset.length  );
-		})
-		.attr("height", function(d,i) {
-			return yScale(d[1]);						
-		});
-/*
-	svg.selectAll("text")
-		.data(dataset)
-		.enter()
-		.attr("text-anchor", "top")
-		.attr("x", function(d,i) {
-			return xScale(d[0]);
-		})
-		.text(function(d) {
-			return d[0];
-		});
- */
-
-
-}); // end .text
+			rules.append("svg:g").classed("labels y_labels", true)
+			    .call(make_y_axis()
+			      .tickSubdivide(1)
+			      .tickSize(10, 5, 0)
+			    )
 
 		
-    </script>
-  </body>
+			// create bars
+			svg.append("svg:g").classed("bar_chart container", true)
+				.attr("transform", "translate(40,0)")
+				.selectAll("rect")
+				.data(dataset)
+				.enter()
+				.append("rect")
+				.attr("fill", "#cccccc")
+				.style("opacity", 0.9)
+				.attr("x", function(d,i) {
+					return xScale(d[0]);
+				})
+				.attr("y", function(d,i) {
+					return ( h - yScale(d[1]) + 20 );
+				})
+				.attr("width", function(d,i) {
+					var barWidth = (w - (pad*2)) / dataset.length;
+					return (barWidth);
+				})
+				.attr("height", function(d,i) {
+					return yScale(d[1]);						
+				});
+		
+	
+				// create light lines
+				/*
+				var yLightScale = d3.scale.linear().domain([0, 100]).range([h,0]);
+		
+				svg.append("svg:g").classed("bar_chart container", true)
+					.attr("transform", "translate(40,0)")
+					.selectAll("rect")
+					.data(dataset)
+					.enter()
+					.append("rect")
+					.attr("fill", "yellow")
+					.style("opacity", 0.5)
+					.attr("x", function(d,i) {
+						return xScale(d[0]);
+					})
+					.attr("y", function(d,i) {
+						return ( h - yLightScale(d[2]) + 20 );
+					})
+					.attr("width", function(d,i) {
+						var barWidth = (w - (pad*2)) / dataset.length;
+						return (barWidth);
+					})
+					.attr("height", function(d,i) {
+						return yLightScale(d[2]);						
+					});
+				*/		
+				
+		
+		}); // end .text
+
+		
+		    </script>
+		
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button> <a class="brand" href="#">Garduino</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li class="active">
+								<a href="#">Home</a>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<h1>
+				Temperature
+			</h1>
+			<div id="graph"></div>
+			
+		</div><!-- /container -->
+
+	</body>
 </html>

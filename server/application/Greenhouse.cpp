@@ -6,7 +6,7 @@
 #include "Greenhouse.h"
 
 
-Greenhouse::Greenhouse () {
+Greenhouse::Greenhouse ( const char * ipAddress ): arduinoIP( ipAddress )  {
     humidity = 0;
 }
 
@@ -59,6 +59,7 @@ void Greenhouse::refreshReadings() {
     
     // connect to arduino or testing file (csv)    
     std::cout << "Starting curl..." << std::endl;
+    std::cout << "Connecting to: " << this->getArduinoIP() << std::endl;	
     CURL *curl;
     CURLcode res;
     curl = curl_easy_init();
@@ -74,8 +75,10 @@ void Greenhouse::refreshReadings() {
 	struct write_result write_result;
 	write_result.data = data;
 	write_result.pos = 0;
-	
-	curl_easy_setopt(curl, CURLOPT_URL, ARDUINO_URL); // specify url
+
+	const char * ip =  this->getArduinoIP();
+	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt(curl, CURLOPT_URL, ip ); // specify url
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); // allow redirects
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L ); // no progress bar:
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write); // callback function
