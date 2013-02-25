@@ -2,9 +2,6 @@
 //  Greenhouse.cpp
 //  Greenhouse
 //
-//  Created by maude on 2/9/13.
-//  Copyright (c) 2013 maude. All rights reserved.
-//
 
 #include "Greenhouse.h"
 
@@ -25,7 +22,7 @@ void Greenhouse::printReadings() {
 
 void Greenhouse::createCSV() {
     FILE * pFile;
-    pFile = fopen("/var/www/public_html/data.csv", "a+");
+    pFile = fopen(CSV_FILE, "a+");
     if (pFile!=NULL) {
 	fprintf(pFile, "%ld, %.2f, %.2f\r\n", this->getTime(), this->getTemp(), this->getLumens() );
 	fclose(pFile);
@@ -157,7 +154,7 @@ int Greenhouse::recordReadings() {
      char buffer[144];
      n = sprintf(
          buffer,
-         "insert into TABLE_NAME (epochtime, temp, humidity, lux ) values (%d, %3.2f, %3.2f, %3.2f);",
+         "insert into TABLE_NAME (epochtime, temp, humidity, lux ) values (%d, %3.2f, %d, %3.2f);",
          timeString, this->getTemp(), tempHumidity, this->getLumens()
      );
      
