@@ -35,7 +35,9 @@ Let it run.
 Set up a server (I've tested both Debian Squeeze and a Mac) with Apache, cURL, and SQLite3 installed, then:
 ```
 git clone https://github.com/ashleyrevlett/garduino.git
-cd server/application
+cd server/application/database
+mv greenhouse3.db.sample greenhouse3.db
+cd ..
 make
 ./greenhouse ARDUINO_URL (ex.: ./greenhouse http://192.168.1.191)
 ```

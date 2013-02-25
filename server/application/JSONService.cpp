@@ -17,15 +17,22 @@ JSONService::JSONService () {
     char *zErrMsg = 0;
      
     // compose sql command
-    const char* sql_code = "SELECT * FROM stats_table LIMIT 100;";     	 
+	char buffer[50];
+	sprintf(buffer, "SELECT * FROM stats_table LIMIT %d;", TOTAL_RESULTS);     	 
+	const char* sql_code = buffer;
      
     returnCode = sqlite3_open(db_file, &db);
     if( returnCode ){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
-		// exit(1);
+		exit(1);
     }
      
+	// clear the existing file
+	std::fstream json_file;
+	json_file.open(JSON_FILENAME, fstream::out | fstream::trunc);
+	json_file.close();
+	 
     returnCode = sqlite3_exec(db, sql_code, sql_callback, 0, &zErrMsg);
     if( returnCode!=SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -37,7 +44,7 @@ JSONService::JSONService () {
 
 int JSONService::sql_callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
-	// write a json (or for now a csv file) to the public_html dir
+	// append a line to the file for each row
     for(int i=0; i<argc; i++){
 		if (argv[i]) {
 			std::fstream json_file;
