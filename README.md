@@ -12,13 +12,12 @@ Garduino is a simple sketch that senses temperature, light, and humidity.
 It uses the Arduino's Ethernet library to serve a CSV file over HTTP.
 Requires Arduino w/ Ethernet Shield and an IP address.
 
-####Greenhouse Application (Daemon on Server):
-"Greenhouse" is a C++ application runs an infinite loop, regularly reading data 
+####Greenhouse Application (C++ Daemon):
+Greenhouse is a C++ application runs an infinite loop, regularly reading data 
 from an Arduino via HTTP, recording data to a SQLite DB, and updating a CSV file for the web app to read.
-Compiling the app requires cURL and SQLite3.
-Future phase: directly asking the Arduino to turn on/off lights and pipes.
+Requires g++, cURL and SQLite3.
 
-####Web Application:
+####Web Application (HTML and d3.js):
 Lives on same server as Greehouse App and displays data from CSV file
 in visual form w/ d3.js; requires web server to host files
 Currently this is just a webpage that displays a d3.js graph of temperature. 
