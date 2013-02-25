@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+*.out
 
 # Compiled Dynamic libraries
 *.so
@@ -11,3 +12,16 @@
 *.lai
 *.la
 *.a
+
+# database files
+*.db
+
+# mac files
+.DS_Store
+
+# executable file
+greenhouse
+*.exe
+
+# Editors temp files
+*~
