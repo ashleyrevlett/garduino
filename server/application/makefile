@@ -6,4 +6,4 @@ SOURCES=main.cpp Greenhouse.cpp
 EXECUTABLE=greenhouse
 
 all:
-	g++ main.cpp Greenhouse.cpp -o greenhouse -lcurl -lsqlite3
+	g++ main.cpp Greenhouse.cpp JSONService.cpp -o greenhouse -lcurl -lsqlite3

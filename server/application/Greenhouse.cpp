@@ -84,12 +84,10 @@ void Greenhouse::refreshReadings()
 			
 	}
 
-	// set vars to found data
-	std::cout << "Recording data..." << std::endl;
+	// set vars to found data & record to db
+	std::cout << "Recording to database..." << std::endl;
 	this->lumens = ::atof(data_container[1].c_str());
 	this->temp = ::atof(data_container[2].c_str());
-	
-	// record readings to db
 	int result = this->recordReadings();
 
     // free(data);
@@ -113,16 +111,13 @@ int Greenhouse::recordReadings()
      int n;
 	 int tempHumidity = 0;
      char buffer[256];
-     n = sprintf(
-         buffer,
-         "CREATE TABLE IF NOT EXISTS %s(id int primary key,epochtime int,temp real,humidity real,lux real); INSERT into %s (epochtime, temp, humidity, lux) values (%d, %3.2f, %d, %3.2f);",
-         TABLE_NAME, TABLE_NAME, timeString, this->getTemp(), tempHumidity, this->getLumens()
+     n = sprintf(buffer,
+         "CREATE TABLE IF NOT EXISTS stats_table (id int primary key,epochtime int,temp real,humidity real,lux real); INSERT into stats_table (epochtime, temp, humidity, lux) values (%d, %3.2f, %d, %3.2f);",
+         timeString, this->getTemp(), tempHumidity, this->getLumens()
      );
      
      const char *sql_code = (const char *)buffer;
-     
-     std::cout << "SQL code: " << buffer << std::endl;
-     
+         
      returnCode = sqlite3_open(db_file, &db);
      if( returnCode ){
          fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -156,22 +151,10 @@ time_t Greenhouse::getTime()
 
 void Greenhouse::printReadings() 
 {
-    std::cout << "Local time at the greenhouse is " << this->getTime() << std::endl;
+    std::cout << "Local time: " << this->getTime() << std::endl;
     std::cout << "Temp: " << this->getTemp() << " degrees F" << std::endl;
     std::cout << "Humidity: " << this->getHumidity() << " humidity" << std::endl;
     std::cout << "Light: " << this->getLumens() << " lux" << std::endl;
-}
-
-
-void Greenhouse::createCSV() 
-{
-    FILE * pFile;
-    pFile = fopen(CSV_FILE, "a+");
-    if (pFile!=NULL) {
-	fprintf(pFile, "%ld, %.2f, %.2f\r\n", this->getTime(), this->getTemp(), this->getLumens() );
-	fclose(pFile);
-    } else
-	    std::cout << "unable to open file";
 }
 
 
@@ -195,11 +178,12 @@ size_t Greenhouse::curl_write( void *ptr, size_t size, size_t nmemb, void *strea
 
 int Greenhouse::sql_callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
-    int i;
+/*    int i;
     for(i=0; i<argc; i++){
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }
     printf("\n");
+*/
     return 0;
 }
 

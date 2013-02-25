@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "Greenhouse.h"
+#include "JSONService.h"
 
 int main(int argc, char* argv[]) 
 {
@@ -20,10 +21,12 @@ int main(int argc, char* argv[])
     Greenhouse *gh = new Greenhouse ( argv[1] );
     
     while (1) {
-        
+
+		// update the readings and record to DB
         gh->refreshReadings();
-        gh->printReadings();
-        gh->createCSV();
+        gh->printReadings();		
+		// write JSON file for website
+		JSONService *json = new JSONService();
 
         std::cout << "Sleeping for 15 seconds." << std::endl << std::endl;
         sleep(15);
