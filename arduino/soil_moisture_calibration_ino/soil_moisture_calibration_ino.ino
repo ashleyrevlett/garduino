@@ -1,27 +1,24 @@
 /*
+  Web Server
+ 
+ Circuit:
+ * Ethernet shield attached to pins 10, 11, 12, 13
 
-Garden Arduino Environmental Monitor (and HTTP Server)
-============
-
-Based on Web Server code from Arduino.cc:
-created 18 Dec 2009 by David A. Mellis
-modified 9 Apr 2012 by Tom Igoe
-adapted Feb 2013 by Ashley Revlett
-
-REQUIRED:
-Ethernet shield attached to pins 10, 11, 12, 13
-Arduino <Time.h> library installed
+ Based on Web Server code from Arduino.cc:
+ created 18 Dec 2009
+ by David A. Mellis
+ modified 9 Apr 2012
+ by Tom Igoe
+ 
+ adapted Feb 2013
+ by Ashley Revlett
 
 PINS: 
 A0: light sensor
-A1: soil moisture level (raw: 0-1024)
+A1: soil moisture level (0-1020)
 A3: temperature
-
-OUTPUT: 
-One-line csv file w/ latest reading served from Arduino IP Address. Format:
-time_since_arduino_boot (unsigned large int), light (float: 0-100), temp (float: ?-?), soil moisture (float: 0-100)
  
-*/
+ */
 
 #include <SPI.h>
 #include <Ethernet.h> 
@@ -81,8 +78,8 @@ void loop() {
           client.println();
                     
           // output time since arduino started running
-          time_t now_time = now();
-          time = int(now_time);
+          time_t now = now();
+          time = int(now);
           client.print( time );
           client.print( "," );
 
@@ -95,6 +92,15 @@ void loop() {
           client.print(lightReading);
           client.print(",");
 
+          // read 3 soil moisture levels
+          int soilReading = analogRead(SOIL_PIN);
+          int soilReading2 = analogRead(SOIL_PIN);		  
+          int soilReading3 = analogRead(SOIL_PIN);		  		  
+		  soilReading = (soilReading + soilReading2 + soilReading3) / 3;
+          soilReading = map(soilReading, 0, 1023, 0, 100);          
+          client.print(soilReading);
+          client.print(",");		  
+
           // read 3 temps and avg them                    
           int tempReading = analogRead(TEMP_PIN);
           int tempReading2 = analogRead(TEMP_PIN);
@@ -103,16 +109,7 @@ void loop() {
           float voltage = (tempReading * 5.0) / 1024.0;         
           float temperatureC = (voltage - 0.5) * 100;          
           float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;          
-          client.print(temperatureF); 
-          client.print(",");		  
-
-          // read 3 soil moisture levels
-          int soilReading = analogRead(SOIL_PIN);
-          int soilReading2 = analogRead(SOIL_PIN);		  
-          int soilReading3 = analogRead(SOIL_PIN);		  		  
-		  soilReading = (soilReading + soilReading2 + soilReading3) / 3;
-          soilReading = map(soilReading, 0, 1023, 0, 100);          
-          client.print(soilReading);
+          client.print(temperatureF);
           client.print("\n");      
           client.println();
               
@@ -139,4 +136,5 @@ void loop() {
    
   }
 }
+
 

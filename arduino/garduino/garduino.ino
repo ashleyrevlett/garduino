@@ -1,25 +1,24 @@
 /*
+  Web Server
+ 
+ Circuit:
+ * Ethernet shield attached to pins 10, 11, 12, 13
 
-Garden Arduino Environmental Monitor (and HTTP Server)
-============
-
-Based on Web Server code from Arduino.cc:
-created 18 Dec 2009 by David A. Mellis
-modified 9 Apr 2012 by Tom Igoe
-adapted Feb 2013 by Ashley Revlett
-
-REQUIRED:
-Ethernet shield attached to pins 10, 11, 12, 13
-Arduino <Time.h> library installed
+ Based on Web Server code from Arduino.cc:
+ created 18 Dec 2009
+ by David A. Mellis
+ modified 9 Apr 2012
+ by Tom Igoe
+ 
+ adapted Feb 2013
+ by Ashley Revlett
 
 PINS: 
 A0: light sensor
-A1: soil moisture level (raw: 0-1024)
+A1: soil moisture level (0-1020)
 A3: temperature
 
-OUTPUT: 
-One-line csv file w/ latest reading served from Arduino IP Address. Format:
-time_since_arduino_boot (unsigned large int), light (float: 0-100), temp (float: ?-?), soil moisture (float: 0-100)
+OUTPUTS: time_since_boot, light (0-100), temp, soil moisture (0-100)
  
 */
 
@@ -139,4 +138,5 @@ void loop() {
    
   }
 }
+
 
