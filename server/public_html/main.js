@@ -12,8 +12,9 @@ d3.text("data.csv", function(unparsedData) {
 	});
 
 	createBarChart(dataset, 1, "#temp");
-	createBarChart(dataset, 2, "#humidity");
 	createBarChart(dataset, 3, "#light");
+	createBarChart(dataset, 4, "#soil_moisture");
+	createBarChart(dataset, 2, "#humidity");
 				
 }); // end .text
 

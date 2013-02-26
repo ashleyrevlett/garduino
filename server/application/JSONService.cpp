@@ -56,7 +56,7 @@ int JSONService::sql_callback(void *NotUsed, int argc, char **argv, char **azCol
 		if (i==argc-1) {
 			std::fstream json_file;
 			json_file.open(JSON_FILENAME, fstream::in | fstream::out | fstream::app);
-			json_file << argv[i] << "\n";
+			json_file << "\n";
 			json_file.close();			
 		};
     };

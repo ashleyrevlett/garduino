@@ -34,6 +34,7 @@ private:
 	const char * arduinoIP;
 	float temp;
 	float humidity;
+	float soil_moisture;
 	float lumens;	
 	int recordReadings();
 	static int sql_callback(void *NotUsed, int argc, char **argv, char **azColName);
@@ -45,6 +46,7 @@ public:
 	float getTemp() { return temp; };
 	float getHumidity() { return humidity; };
 	float getLumens() { return lumens; };
+	float getSoilMoisture() { return soil_moisture; };
 	const char * getArduinoIP() { return arduinoIP; };
     time_t getTime();
 	void refreshReadings();

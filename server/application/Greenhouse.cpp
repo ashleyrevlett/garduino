@@ -54,7 +54,7 @@ void Greenhouse::refreshReadings()
 
 		// prepare to split the results up
 		data[write_result.pos] = '\0'; // null terminate the result
-		std::string data_container[3];
+		std::string data_container[4];
 		std::string data_string(data); // copy data into string for convenience
 		char delimiter[] = ",";
 		char delimiter2[] = "\n";
@@ -62,8 +62,8 @@ void Greenhouse::refreshReadings()
 		int end_pos = 0;
 		int n = 0;
 	
-		// 3 readings to find in results
-		while (n < 3) {
+		// 4 readings to find in results
+		while (n < 4) {
 	    
 		    for (unsigned int i=start_pos; i < data_string.length(); i++) {
 		
@@ -88,6 +88,7 @@ void Greenhouse::refreshReadings()
 	std::cout << "Recording to database..." << std::endl;
 	this->lumens = ::atof(data_container[1].c_str());
 	this->temp = ::atof(data_container[2].c_str());
+	this->soil_moisture = ::atof(data_container[3].c_str());
 	int result = this->recordReadings();
 
     // free(data);
@@ -112,8 +113,8 @@ int Greenhouse::recordReadings()
 	 int tempHumidity = 0;
      char buffer[256];
      n = sprintf(buffer,
-         "CREATE TABLE IF NOT EXISTS stats_table (id int primary key,epochtime int,temp real,humidity real,lux real); INSERT into stats_table (epochtime, temp, humidity, lux) values (%d, %3.2f, %d, %3.2f);",
-         timeString, this->getTemp(), tempHumidity, this->getLumens()
+         "CREATE TABLE IF NOT EXISTS stats_table (id int primary key,epochtime int,temp real,humidity real,lux real, soil_moisture real); INSERT into stats_table (epochtime, temp, humidity, lux, soil_moisture) values (%d, %3.2f, %d, %3.2f, %3.2f);",
+         timeString, this->getTemp(), tempHumidity, this->getLumens(), this->getSoilMoisture()
      );
      
      const char *sql_code = (const char *)buffer;
@@ -155,8 +156,8 @@ void Greenhouse::printReadings()
     std::cout << "Temp: " << this->getTemp() << " degrees F" << std::endl;
     std::cout << "Humidity: " << this->getHumidity() << " humidity" << std::endl;
     std::cout << "Light: " << this->getLumens() << " lux" << std::endl;
+	std::cout << "Soil Moisture: " << this->getSoilMoisture() << " out of 100" << std::endl;	
 }
-
 
 size_t Greenhouse::curl_write( void *ptr, size_t size, size_t nmemb, void *stream) 
 {

@@ -10,7 +10,9 @@ and display the readings via a publicly accessible website.
 ####Garduino (Arduino): 
 Garduino is a simple sketch that senses temperature, light, and humidity.
 It uses the Arduino's Ethernet library to serve a CSV file over HTTP.
-Requires Arduino w/ Ethernet Shield and an IP address.
+Requires Arduino w/ Ethernet Shield, Arduino Time and Ethernet libraries installed.
+Sends data in format of:
+```unsigned large int time_since_arduino_boot, float light (range: 0-100), float temp, float soil moisture (range: 0-100)```
 
 ####Greenhouse Application (C++ Daemon):
 Greenhouse is a C++ application runs an infinite loop, regularly reading data 
@@ -20,8 +22,7 @@ Requires g++, cURL and SQLite3.
 ####Web Application (HTML and d3.js):
 Lives on same server as Greehouse App and displays data from CSV file
 in visual form w/ d3.js; requires web server to host files
-Currently this is just a webpage that displays a d3.js graph of temperature. 
-In progress.	
+Currently this is just a webpage that displays a d3.js graph of temperature. 	
 
 ##Usage:
 
@@ -30,6 +31,7 @@ Connect your Arduino to an [Ethernet Shield](http://arduino.cc/en/Main/ArduinoEt
 Attach a light sensor to ```pin A0``` and a temperature sensor to ```pin A3```. 
 Upload the "arduino/garduino.ino" sketch to the Arduino.
 Let it run. 
+TODO: add circuit diagram, detail nail/soil moisture circuit
 
 **Server:**
 Set up a server (I've tested both Debian Squeeze and a Mac) with Apache, cURL, and SQLite3 installed, then:

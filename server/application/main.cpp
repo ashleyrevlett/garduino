@@ -2,7 +2,7 @@
 // garduino
 
 // Arduino IP address is passed as parameter.
-// Default sleep time is 60 seconds
+// Sleep time is defined below
 
 #include <iostream>
 #include <unistd.h>
@@ -10,7 +10,7 @@
 #include "Greenhouse.h"
 #include "JSONService.h"
 
-#define SLEEP_TIME 60 // in seconds
+#define SLEEP_TIME 120 // in seconds
 
 int main(int argc, char* argv[]) 
 {
