@@ -17,27 +17,32 @@
 	<body>
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container">
+				<div class="container" id="main_content">
 					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button> <a class="brand" href="#">Garduino</a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<li class="active">
-								<a href="#">Home</a>
-							</li>
+								<a href="#temp_now">Temperature</a>
+							</li>							
+							<li>
+								<a href="#light_now">Light</a>
+							</li>							
+							<li>
+								<a href="#soil_now">Soil Moisture</a>
+							</li>							
+
 						</ul>
 					</div><!--/.nav-collapse -->
 				</div>
 			</div>
 		</div>
 		<div class="container">
-			<h1>Temperature</h1>
+			<h2><span class="now" id="temp_now"></span> Temperature</h2>
 			<div class="graph" id="temp"></div>						
-			<h1>Light</h1>
+			<h2><span class="now" id="light_now"></span> Light</h2>
 			<div class="graph" id="light"></div>
-			<h1>Soil Moisture</h1>
-			<div class="graph" id="soil"></div>
-			<h1>Humidity</h1>
-			<div class="graph" id="humidity"></div>												
+			<h2><span class="now" id="soil_now"></span> Soil Moisture</h2>
+			<div class="graph" id="soil"></div>											
 		</div><!-- /container -->
 
 		
