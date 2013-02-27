@@ -1,12 +1,12 @@
 //
-//  JSONService.cpp
-//  JSONService
+//  DataService.cpp
+//  DataService
 //
 
-#include "JSONService.h"
+#include "DataService.h"
 
 
-JSONService::JSONService () { 
+DataService::DataService () { 
 
 	// select most recent 100 db entries and write them to a json file
 	const char * db_file = "database/greenhouse3.db";	
@@ -44,7 +44,7 @@ JSONService::JSONService () {
    sqlite3_close(db);
 }
 
-int JSONService::sql_callback(void *NotUsed, int argc, char **argv, char **azColName)
+int DataService::sql_callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
 	std::fstream json_file;
 	

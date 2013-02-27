@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "Greenhouse.h"
-#include "JSONService.h"
+#include "DataService.h"
 
 #define SLEEP_TIME 120 // in seconds
 
@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
         gh->refreshReadings();
         gh->printReadings();
 				
-		// write JSON file for website
-		JSONService *json = new JSONService();
+		// write data file for website
+		DataService *data = new DataService();
 
         std::cout << "Sleeping for " << SLEEP_TIME << " seconds." << std::endl << std::endl;
         sleep(SLEEP_TIME);

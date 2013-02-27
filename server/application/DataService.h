@@ -1,13 +1,13 @@
 //
-//  JSONService.h
-//  JSONService
+//  DataService.h
+//  DataService
 //
 //  this writes a static json file to the public_html directory
 //  and is called every time the db is updated
 //
 
-#ifndef __Greenhouse__JSONService__
-#define __Greenhouse__JSONService__
+#ifndef __Greenhouse__DataService__
+#define __Greenhouse__DataService__
 
 #include <iostream>
 #include <fstream>
@@ -18,21 +18,20 @@
 
 using std::fstream;
 
-#define JSON_FILENAME "../public_html/data.csv"
+
+#define DATA_FILENAME "../public_html/data.csv"
 #define TOTAL_RESULTS 1000
 
-class JSONService {
+class DataService {
     
 public:
-	JSONService();
-    ~JSONService();
+	DataService();
+    ~DataService();
 	
 private:
 	static int sql_callback(void *NotUsed, int argc, char **argv, char **azColName);
-	
 
 };
 
 
-
-#endif /* defined(__Greenhouse__JSONService__) */
+#endif /* defined(__Greenhouse__DataService__) */
