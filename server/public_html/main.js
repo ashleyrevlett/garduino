@@ -6,11 +6,12 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50},
 
 d3.csv("data.csv", function(error, data) {
 
-//	console.log(data);
-//	console.log(error);	
+	console.log(data);
+	console.log(error);	
 
 	data.forEach(function(d) {
 		d.date = new Date( d.date * 1000 );
+
 	});
  
 	createBarChart(data, "temp");
@@ -25,13 +26,16 @@ function createBarChart( data, csvColName, divID ) {
 	var minDate = d3.min(data, function(d) { return d.date; });
 	var maxDate = d3.max(data, function(d) { return d.date; });
 	var minY = d3.min(data, function(d) { return d[ csvColName ]; });
-	var maxY = d3.max(data, function(d) { return d[ csvColName ]; });
+	var maxY = d3.max(data, function(d) { return parseFloat(d[csvColName]); });
+
+	console.log("MinY for " + csvColName + ": "+ minY);
+	console.log("MaxY for " + csvColName + ": "+ maxY);
 
 	var x = d3.time.scale()
 		.domain([ minDate, maxDate ])
 		.range([ 0, width ]);	
 	var y = d3.scale.linear()
-		.domain([ minY, maxY ])
+		.domain([ minY-2, maxY+2 ]) // add and subtract # to give some padding to line
 		.range([height, 0]);
 
 	var xAxis = d3.svg.axis()
@@ -44,7 +48,12 @@ function createBarChart( data, csvColName, divID ) {
 
 	var line = d3.svg.line()
 	    .x(function(d) { return x( d.date ); })
-	    .y(function(d) { return y( d[csvColName] ); });
+	    .y(function(d) { 
+//			console.log( "Non-scaled val: " + d[csvColName] );
+//			console.log( "Scaled val: " + y( d[csvColName] ) );
+//			console.log("\n");
+			return y( d[csvColName] ); 
+		});
  
 	var svg = d3.select("#"+csvColName).append("svg")
 	    .attr("width", width + margin.left + margin.right)
