@@ -20,3 +20,27 @@
 .labels.x_labels {
 	font-size: 9px;
 }
+
+div.graph {
+	padding:10px;
+	border: 1px solid #ccc;
+	font-size: 12px;
+	margin-bottom:30px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+ 
+.x.axis path {
+  display: none;
+}
+ 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}

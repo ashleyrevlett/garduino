@@ -108,7 +108,7 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 960px) {
   .row {
     margin-left: -30px;
     *zoom: 1;
@@ -131,7 +131,7 @@
   .navbar-static-top .container,
   .navbar-fixed-top .container,
   .navbar-fixed-bottom .container {
-    width: 1170px;
+    width: 960px;
   }
   .span12 {
     width: 1170px;
