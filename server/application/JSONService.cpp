@@ -31,8 +31,10 @@ JSONService::JSONService () {
 	// clear the existing file
 	std::fstream json_file;
 	json_file.open(JSON_FILENAME, fstream::out | fstream::trunc);
+	json_file << "date,temp,humidity,light,soil\n";
 	json_file.close();
 	 
+	// write each row
     returnCode = sqlite3_exec(db, sql_code, sql_callback, 0, &zErrMsg);
     if( returnCode!=SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -44,19 +46,19 @@ JSONService::JSONService () {
 
 int JSONService::sql_callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
+	std::fstream json_file;
+	
 	// append a line to the file for each row
     for(int i=0; i<argc; i++){
-		if (argv[i]) {
-			std::fstream json_file;
+		if (argv[i] && (i!=argc-1)) {
 			json_file.open(JSON_FILENAME, fstream::in | fstream::out | fstream::app);
-			json_file << argv[i] << ", ";
+			json_file << argv[i] << ",";
 			json_file.close();
 
 		};
 		if (i==argc-1) {
-			std::fstream json_file;
 			json_file.open(JSON_FILENAME, fstream::in | fstream::out | fstream::app);
-			json_file << "\n";
+			json_file << argv[i] << "\n";
 			json_file.close();			
 		};
     };
