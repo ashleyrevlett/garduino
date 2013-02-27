@@ -43,9 +43,20 @@ cd ..
 make
 ./greenhouse ARDUINO_URL (ex.: ./greenhouse http://192.168.1.191)
 ```
-Create a virtual host that points to the server/public_html directory of the Garduino.
+Create a virtual host that points to the server/public_html directory of the Garduino. 
+Assuming you're running Debian Linux and you're currently in the main garduino folder:
+```
+sudo cp server/conf/vhost.com.sample /etc/apache2/sites-available/myGarduino.com
+vi /etc/apache2/sites-available/myGarduino.com
+```
+Replace "myGarduino.com" your domain name. 
+```
+sudo a2ensite myGarduino.com
+sudo /etc/init.d/apache2 reload
+```
+
 To make the web app accessible outside your local network, you'll need to get a static IP
-address (or virtual static IP) and configure your router to forward port 80 traffic to 
+address (or virtual static IP, like from dyndns.org) and configure your router to forward port 80 traffic to 
 your server's IP Address.
 
 ## Todo's

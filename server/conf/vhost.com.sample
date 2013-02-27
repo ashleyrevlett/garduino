@@ -1,0 +1,22 @@
+# domain: myGarduino.org
+# public: /var/www/garduino/server/public_html/
+
+<VirtualHost *:80>
+
+  # Admin email, Server Name (domain name) and any aliases
+  ServerAdmin webmaster@myGarduino.org
+  ServerName myGarduino.org
+  ServerAlias www.myGarduino.org
+
+
+  # Index file and Document Root (where the public files are located)
+  DirectoryIndex index.html
+  DocumentRoot /var/www/garduino/server/public_html
+
+
+  # Custom log file locations
+  LogLevel warn
+  ErrorLog  /var/www/garduino/server/log/error.log
+  CustomLog /var/www/garduino/server/log/access.log combined
+
+</VirtualHost>

@@ -19,7 +19,7 @@
 using std::fstream;
 
 #define JSON_FILENAME "../public_html/data.csv"
-#define TOTAL_RESULTS 3000
+#define TOTAL_RESULTS 1000
 
 class JSONService {
     
