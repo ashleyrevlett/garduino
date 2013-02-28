@@ -34,38 +34,50 @@ Let it run.
 TODO: add circuit diagram, detail nail/soil moisture circuit
 
 **Server:**
-Set up a server (I've tested both Debian Squeeze and a Mac) with Apache, cURL, and SQLite3 installed, then:
+I used Debian Squeeze with Apache, but the server and OS is really up to you. Curl, sqlite3, g++ required.
 ```
+sudo apt-get install build-essential apache2 curl libcurl sqlite3
+cd /var/www
 git clone https://github.com/ashleyrevlett/garduino.git
 cd server/application/database
-mv greenhouse3.db.sample greenhouse3.db
+cp greenhouse3.db.sample greenhouse3.db
 cd ..
 make
 ./greenhouse ARDUINO_URL (ex.: ./greenhouse http://192.168.1.191)
 ```
 Create a virtual host that points to the server/public_html directory of the Garduino. 
-Assuming you're running Debian Linux and you're currently in the main garduino folder:
+On Apache, you can use the included sample file as a starting point.
+Replace "myGarduino.com" your domain name:
 ```
 sudo cp server/conf/vhost.com.sample /etc/apache2/sites-available/myGarduino.com
 vi /etc/apache2/sites-available/myGarduino.com
-```
-Replace "myGarduino.com" your domain name. 
-```
 sudo a2ensite myGarduino.com
 sudo /etc/init.d/apache2 reload
 ```
 
 To make the web app accessible outside your local network, you'll need to get a static IP
 address (or virtual static IP, like from dyndns.org) and configure your router to forward port 80 traffic to 
-your server's IP Address.
+the IP address of the server we set up above.
 
 ## Todo's
 
-* finish flesh out the UI for the web app
-* adding the ability for the Arduino to react to its environment, like turning lights and irrigation on and off. 
-* sending text or email notifications to someone if certain events occur (ex., lights go off at odd time, temp is too high, etc.).
-
+* add data archive view to web app
+* add alert/email notification functionality (ex., plant is thirsty, temp too high, etc.).
+* adding ability for Arduino to turning lights and irrigation on and off based on readings. 
 
 ###License
-Released under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License. Full license available at the Creative Commons website:
-http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+	Copyright (C) 2013 ashley revlett - ashleyrevlett@gmail.com
+	License: GNU General Public License, version 3 (GPL-3.0)
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
