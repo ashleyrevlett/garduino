@@ -64,3 +64,8 @@ your server's IP Address.
 * finish flesh out the UI for the web app
 * adding the ability for the Arduino to react to its environment, like turning lights and irrigation on and off. 
 * sending text or email notifications to someone if certain events occur (ex., lights go off at odd time, temp is too high, etc.).
+
+
+###License
+Released under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License. Full license available at the Creative Commons website:
+http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode

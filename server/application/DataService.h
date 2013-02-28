@@ -27,6 +27,7 @@ class DataService {
 public:
 	DataService();
     ~DataService();
+	void refreshDataService();
 	
 private:
 	static int sql_callback(void *NotUsed, int argc, char **argv, char **azColName);

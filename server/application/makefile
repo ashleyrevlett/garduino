@@ -2,8 +2,8 @@
 
 CC=g++
 CGLAGS=-c -Wall
-SOURCES=main.cpp Greenhouse.cpp
+SOURCES=main.cpp Greenhouse.cpp DataService.cpp
 EXECUTABLE=greenhouse
 
 all:
-	g++ main.cpp Greenhouse.cpp JSONService.cpp -o greenhouse -lcurl -lsqlite3
+	g++ main.cpp Greenhouse.cpp DataService.cpp -o greenhouse -lcurl -lsqlite3 -Wall -g

@@ -4589,7 +4589,7 @@ input[type="submit"].btn.btn-mini {
   left: 0;
   display: block;
   float: left;
-  margin: 0 10px 0 0;
+  margin: 14px 10px 0 20px;
 }
 
 .navbar .nav.pull-right {
@@ -6156,3 +6156,9 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+a.brand img {
+	max-height: 44px;
+	width:auto;
+}
+

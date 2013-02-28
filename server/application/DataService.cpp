@@ -5,10 +5,12 @@
 
 #include "DataService.h"
 
+DataService::DataService() {}
 
-DataService::DataService () { 
 
-	// select most recent 100 db entries and write them to a json file
+void DataService::refreshDataService() {
+	
+	// select most recent 100 db entries and write them to a data file
 	const char * db_file = "database/greenhouse3.db";	
 	
     // prepare for db connection
@@ -29,10 +31,10 @@ DataService::DataService () {
     }
      
 	// clear the existing file
-	std::fstream json_file;
-	json_file.open(JSON_FILENAME, fstream::out | fstream::trunc);
-	json_file << "date,temp,humidity,light,soil\n";
-	json_file.close();
+	std::fstream data_file;
+	data_file.open(DATA_FILENAME, fstream::out | fstream::trunc);
+	data_file << "date,temp,humidity,light,soil\n";
+	data_file.close();
 	 
 	// write each row
     returnCode = sqlite3_exec(db, sql_code, sql_callback, 0, &zErrMsg);
@@ -44,26 +46,26 @@ DataService::DataService () {
    sqlite3_close(db);
 }
 
+
 int DataService::sql_callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
-	std::fstream json_file;
+	std::fstream data_file;
 	
 	// append a line to the file for each row
     for(int i=0; i<argc; i++){
 		if (argv[i] && (i!=argc-1)) {
-			json_file.open(JSON_FILENAME, fstream::in | fstream::out | fstream::app);
-			json_file << argv[i] << ",";
-			json_file.close();
+			data_file.open(DATA_FILENAME, fstream::in | fstream::out | fstream::app);
+			data_file << argv[i] << ",";
+			data_file.close();
 
 		};
 		if (i==argc-1) {
-			json_file.open(JSON_FILENAME, fstream::in | fstream::out | fstream::app);
-			json_file << argv[i] << "\n";
-			json_file.close();			
+			data_file.open(DATA_FILENAME, fstream::in | fstream::out | fstream::app);
+			data_file << argv[i] << "\n";
+			data_file.close();			
 		};
     };
     return 0;
-	
 }
 
 

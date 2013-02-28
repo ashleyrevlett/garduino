@@ -90,7 +90,9 @@ void Greenhouse::refreshReadings()
 	this->temp = ::atof(data_container[2].c_str());
 	this->soil_moisture = ::atof(data_container[3].c_str());
 	int result = this->recordReadings();
-
+	if (result != 0) {
+		std::cout << "Database recording error" << std::endl;
+	}
     // free(data);
 
    }

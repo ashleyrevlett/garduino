@@ -30,7 +30,8 @@ int main(int argc, char* argv[])
         gh->printReadings();
 				
 		// write data file for website
-		DataService *data = new DataService();
+		DataService * service = new DataService();
+		service->refreshDataService();
 
         std::cout << "Sleeping for " << SLEEP_TIME << " seconds." << std::endl << std::endl;
         sleep(SLEEP_TIME);
