@@ -23,7 +23,14 @@ void Greenhouse::refreshReadings()
     std::cout << "Connecting to: " << this->getArduinoIP() << std::endl;	
     CURL *curl;
     CURLcode res;
-    curl = curl_easy_init();
+	
+	try { 
+		curl = curl_easy_init();
+	}
+	catch(...) {
+		std::cout << "Curl initialization error. Exiting..." << std::endl;
+		exit(1);
+	}
     
     if(curl) {
                 
@@ -43,10 +50,17 @@ void Greenhouse::refreshReadings()
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write); // callback 
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &write_result);
 		
-		res = curl_easy_perform(curl);
+		try {
+			res = curl_easy_perform(curl);
+		} catch(...) {
+			std::cout << "Curl_easy_perform error. Exiting..." << std::endl;
+			exit(1);						
+		}
 	
-		if(res != CURLE_OK)
+		if(res != CURLE_OK) {
 		    fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+			exit(1);						
+		}
 
 		// clean up
 		curl_easy_cleanup(curl);
@@ -167,8 +181,8 @@ size_t Greenhouse::curl_write( void *ptr, size_t size, size_t nmemb, void *strea
     struct write_result *result = (struct write_result *)stream;
     
     if(result->pos + size * nmemb >= BUFFER_SIZE - 1) {
-        fprintf(stderr, "curl error: too small buffer\n");
-        return 0;
+		std::cout << "Not an Arduino IP address. Exiting now." << std::endl;
+        exit(1);
     }
     
     memcpy(result->data + result->pos, ptr, size * nmemb);
