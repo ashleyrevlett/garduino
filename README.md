@@ -36,14 +36,14 @@ TODO: add circuit diagram, detail nail/soil moisture circuit
 **Server:**
 I used Debian Squeeze with Apache, but the server and OS is really up to you. Curl, sqlite3, g++ required.
 ```
-sudo apt-get install build-essential apache2 curl libcurl sqlite3
+sudo apt-get install build-essential apache2 libsqlite3-dev libcurl3-gnutls-dev
 cd /var/www
-git clone https://github.com/ashleyrevlett/garduino.git
+sudo git clone https://github.com/ashleyrevlett/garduino.git
 cd server/application/database
 cp greenhouse3.db.sample greenhouse3.db
 cd ..
-make
-./greenhouse ARDUINO_URL (ex.: ./greenhouse http://192.168.1.191)
+sudo make
+sudo ./greenhouse ARDUINO_URL (ex.: ./greenhouse http://192.168.1.191)
 ```
 Create a virtual host that points to the server/public_html directory of the Garduino. 
 On Apache, you can use the included sample file as a starting point.
