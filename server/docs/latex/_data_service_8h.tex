@@ -1,0 +1,33 @@
+\hypertarget{_data_service_8h}{\section{/\-Applications/\-M\-A\-M\-P/htdocs/greenhouse3/server/application/\-Data\-Service.h File Reference}
+\label{_data_service_8h}\index{/\-Applications/\-M\-A\-M\-P/htdocs/greenhouse3/server/application/\-Data\-Service.\-h@{/\-Applications/\-M\-A\-M\-P/htdocs/greenhouse3/server/application/\-Data\-Service.\-h}}
+}
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include $<$sqlite3.\-h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_data_service}{Data\-Service}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{_data_service_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}{\#define {\bfseries D\-A\-T\-A\-\_\-\-F\-I\-L\-E\-N\-A\-M\-E}~\char`\"{}../public\-\_\-html/data.\-csv\char`\"{}}\label{_data_service_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}
+
+\item 
+\hypertarget{_data_service_8h_a538bdb4fa24a479d492b7c541af4724c}{\#define {\bfseries T\-O\-T\-A\-L\-\_\-\-R\-E\-S\-U\-L\-T\-S}~1000}\label{_data_service_8h_a538bdb4fa24a479d492b7c541af4724c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Read the last several Arduino results from the database, then write them to a C\-S\-V file that's accessible by the web app. Called by \hyperlink{class_greenhouse}{Greenhouse} each time the database is updated, so the web app always shows the latest data.
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000001}{Todo}]\end{DoxyRefDesc}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_greenhouse}{Greenhouse} 
+\end{DoxySeeAlso}

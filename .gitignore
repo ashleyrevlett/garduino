@@ -25,3 +25,7 @@ greenhouse
 
 # Editors temp files
 *~
+
+# generated doxygen files
+server/application/docs
+server/application/docs/*

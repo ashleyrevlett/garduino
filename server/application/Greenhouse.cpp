@@ -1,7 +1,8 @@
-//
-//  Greenhouse.cpp
-//  Greenhouse
-//
+/** 
+ * @package Garduino
+ * @file 	DataService.cpp
+ */
+
 
 #include "Greenhouse.h"
 
@@ -16,6 +17,10 @@ Greenhouse::~Greenhouse()
 {}
 
 
+/**
+* Connect to the Arduino, read and parse the data, record results
+* @return	void
+*/
 void Greenhouse::refreshReadings() 
 {
     
@@ -153,7 +158,6 @@ int Greenhouse::recordReadings()
     return returnCode;
     
 }
-
 
 
 time_t Greenhouse::getTime() 

@@ -1,7 +1,8 @@
-//
-//  DataService.cpp
-//  DataService
-//
+/** 
+ * @package Garduino
+ * @file 	DataService.cpp
+ */
+
 
 #include "DataService.h"
 
